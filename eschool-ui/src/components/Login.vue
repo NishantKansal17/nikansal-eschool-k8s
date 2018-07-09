@@ -3,34 +3,89 @@
   <b-card 
     class="align-center"
     header-tag="header">
-    <div class="alert alert-danger error-box" v-if="error">
-      <a class="close" aria-label="close" @click="error=false">&times;</a>
-      <p id="errorBox">{{ error }}</p>
-    </div>
-    <b-form id="loginForm" @submit.prevent="submit()">
+    <b-form id="stuRegistrationForm" @submit.prevent="submit()">
       <b-form-group vertical
-                    label="Username"
-                    label-for="User"
+                    label="First Name"
+                    label-for="firstName"
                     class="form-vertical-align">
-      <b-form-input id="User"
-                      v-model="credentials.username"
-                      required
-                      placeholder="Username" autofocus>
+      <b-form-input id="firstName"
+                      v-model="student.firstName"
+                      placeholder="First name" autofocus>
      </b-form-input>
      </b-form-group>
      <b-form-group vertical
-                    label="Password"
-                    label-for="Password"
+                    label="Middle Name"
+                    label-for="middleName"
                     class="form-vertical-align">
-     <b-form-input id="Password" type="password"
-                      v-model="credentials.password"
-                      required
-                      placeholder="Password" autofocus>
+     <b-form-input id="middleName" type="text"
+                      v-model="student.middleName"
+                      placeholder="Middle name">
      </b-form-input>
      </b-form-group>
-     <b-button id="loginBtn" variant="primary" size="lg" type="submit">Sign in</b-button>
+     
+     <b-form-group vertical
+                    label="Last Name"
+                    label-for="lastName"
+                    class="form-vertical-align">
+     <b-form-input id="lastName" type="text"
+                      v-model="student.lastName"
+                      placeholder="Last name">
+     </b-form-input>
+     </b-form-group>
+     
+     <b-form-group vertical
+                    label="Mobile"
+                    label-for="mobile"
+                    class="form-vertical-align">
+     <b-form-input id="mobile" type="text"
+                      v-model="student.mobile"
+                      placeholder="Mobile no.">
+     </b-form-input>
+     </b-form-group>
+     
+     <b-form-group vertical
+                    label="Address"
+                    label-for="address"
+                    class="form-vertical-align">
+     <b-form-input id="address" type="text"
+                      v-model="student.address"
+                      placeholder="Address">
+     </b-form-input>
+     </b-form-group>
+     
+     <b-form-group vertical
+                    label="Country"
+                    label-for="country"
+                    class="form-vertical-align">
+     <b-form-input id="country" type="text"
+                      v-model="student.country"
+                      placeholder="Country">
+     </b-form-input>
+     </b-form-group>
+     
+     
+     <b-form-group vertical
+                    label="State"
+                    label-for="state"
+                    class="form-vertical-align">
+     <b-form-input id="state" type="text"
+                      v-model="student.state"
+                      placeholder="State">
+     </b-form-input>
+     </b-form-group>
+     
+     <b-form-group vertical
+                    label="Email"
+                    label-for="email"
+                    class="form-vertical-align">
+     <b-form-input id="email" type="email"
+                      v-model="student.email"
+                      placeholder="Email id">
+     </b-form-input>
+     </b-form-group>
+     
+     <b-button id="loginBtn" variant="primary" size="lg" type="submit">Go</b-button>
    </b-form>
-   <div class="align-center" style="padding-top: 1em; font-size: smaller">&copy; Cisco Systems {{year}}</div>
   </b-card>
   </div>
 </template>
@@ -43,9 +98,15 @@ export default {
   },
   data() {
     return {
-      credentials: {
-        username: "",
-        password: ""
+      student: {
+        firstName: "",
+        middleName: "",
+        lastName: "",
+        mobile: "",
+        address: "",
+        country: "",
+        state: "",
+        "email": ""
       },
       hostname: "",
       error: "",
@@ -57,14 +118,11 @@ export default {
   methods: {
     submit() {
       console.log("submit() called..");
-      AXIOS.get("/user/" + this.credentials.username)
+      AXIOS.post("/eschool/student/registration/create", this.student)
       .then(response => {
             // JSON responses are automatically parsed.
             this.response = response.data
             console.log(response.data)
-            localStorage.setItem("userName", this.response.firstName)
-            localStorage.setItem("userPassword", this.response.lastName)
-            this.$router.push("/welcome");
           })
           .catch(e => {
             this.errors.push(e)

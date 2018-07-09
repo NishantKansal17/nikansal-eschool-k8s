@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "eschool.fullname" . }}
+  labels:
+    app: {{ include "eschool.name" . }}
+    chart: {{ include "eschool.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: 9000
+      protocol: TCP
+      name: http
+  selector:
+    app: {{ include "eschool.name" . }}
+    release: {{ .Release.Name }}

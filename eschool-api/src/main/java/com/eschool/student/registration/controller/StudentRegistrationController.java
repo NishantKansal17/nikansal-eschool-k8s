@@ -16,7 +16,7 @@ import com.eschool.student.response.Response;
 
 
 @Controller
-@RequestMapping(value="/eschool/student/registration")
+@RequestMapping(value="/api/eschool/student/registration")
 public class StudentRegistrationController {
 
 	private static List<Student> students = new ArrayList<Student>();
